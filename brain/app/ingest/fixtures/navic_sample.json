@@ -1,0 +1,18 @@
+{
+  "contract": "NavIC-25Byte-v1",
+  "packets": [
+    {
+      "description": "Sample GO Verdict Packet for Mandapam Sector",
+      "raw_hex": "AA01015D60029BA001000800C0000069B560C5A8293F41",
+      "decoded": {
+        "verdict": "GO",
+        "latitude": 9.28,
+        "longitude": 79.12,
+        "wave_height_m": 0.8,
+        "wind_speed_knots": 12.0,
+        "hazard_flags": 0,
+        "crc_valid": true
+      }
+    }
+  ]
+}

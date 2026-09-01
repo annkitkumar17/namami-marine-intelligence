@@ -1,0 +1,38 @@
+{
+  "source": "INCOIS_PFZ_ADVISORY",
+  "issue_date": "2026-09-01T06:00:00Z",
+  "valid_until": "2026-09-03T18:00:00Z",
+  "state": "ACTIVE",
+  "records": [
+    {
+      "id": "pfz_node_101",
+      "sector": "Rameswaram_South",
+      "depth_m": 24.5,
+      "sst_celsius": 28.4,
+      "latitude": 9.220,
+      "longitude": 79.350,
+      "distance_from_port_km": 18.2,
+      "bearing_deg": 135.0
+    },
+    {
+      "id": "pfz_node_102",
+      "sector": "Pamban_Offshore",
+      "depth_m": 31.0,
+      "sst_celsius": 28.1,
+      "latitude": 9.150,
+      "longitude": 79.480,
+      "distance_from_port_km": 32.5,
+      "bearing_deg": 120.0
+    },
+    {
+      "id": "pfz_node_103",
+      "sector": "Tuticorin_East",
+      "depth_m": 42.0,
+      "sst_celsius": 27.9,
+      "latitude": 8.780,
+      "longitude": 78.450,
+      "distance_from_port_km": 45.0,
+      "bearing_deg": 98.0
+    }
+  ]
+}

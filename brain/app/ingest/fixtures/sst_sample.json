@@ -1,0 +1,11 @@
+{
+  "source": "OSTIA_SST_FALLBACK",
+  "timestamp": "2026-09-01T12:00:00Z",
+  "resolution_km": 5.0,
+  "grid": [
+    { "latitude": 9.20, "longitude": 79.30, "sst_celsius": 28.5, "wave_height_m": 0.8, "wind_speed_knots": 12.0 },
+    { "latitude": 9.25, "longitude": 79.35, "sst_celsius": 28.4, "wave_height_m": 0.9, "wind_speed_knots": 13.5 },
+    { "latitude": 9.15, "longitude": 79.45, "sst_celsius": 28.1, "wave_height_m": 1.1, "wind_speed_knots": 15.0 },
+    { "latitude": 8.75, "longitude": 78.40, "sst_celsius": 27.9, "wave_height_m": 1.4, "wind_speed_knots": 18.0 }
+  ]
+}

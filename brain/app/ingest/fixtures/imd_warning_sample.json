@@ -1,0 +1,15 @@
+{
+  "source": "IMD_DISTRICT_WARNING",
+  "issued_at": "2026-09-01T08:30:00Z",
+  "valid_until": "2026-09-02T08:30:00Z",
+  "warnings": [
+    {
+      "district": "Ramanathapuram",
+      "state": "Tamil Nadu",
+      "hazard_type": "SQUALL",
+      "severity": "ALERT",
+      "max_wind_gust_knots": 35.0,
+      "advisory_text": "Squally weather with wind speed reaching 30-40 kmph gusting to 50 kmph likely along Gulf of Mannar."
+    }
+  ]
+}
