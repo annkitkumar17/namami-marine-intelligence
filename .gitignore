@@ -1,0 +1,53 @@
+.next/
+.ruff_cache/
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+*.iml
+
+# Environment variables
+.env
+.env.*
+!.env.example
+!**/.env.example
+
+# Node
+node_modules/
+dist/
+build/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+*.log
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Python test/cache
+.pytest_cache/
+.mypy_cache/
+
+# Coverage
+coverage/
+htmlcov/
+
+# Generated files
+*.sqlite3
+
+# MinIO/local storage
+minio-data/
+.env
+node_modules/
+.next/
+dist/

@@ -7,7 +7,7 @@ class BaseSourceAdapter(ABC):
         self.source_id = source_id
 
     @abstractmethod
-    async def fetch_raw(() -> Dict[str, Any]:
+    async def fetch_raw(self) -> Dict[str, Any]:
         """Fetch raw external API data or load fixture."""
         pass
 

@@ -1,10 +1,11 @@
 import { Router } from "express";
 import { BrainClient } from "../clients/brainClient.js";
 export const healthRouter = Router();
-healthRouter.get("/healthz", (req, res) => {
+healthRouter.get("/healthz", (_req, res) => {
     res.json({
         status: "ok",
         service: "namami-edge",
+        data_mode: process.env.DATA_MODE || "FIXTURE",
         timestamp: new Date().toISOString(),
     });
 });
@@ -18,15 +19,16 @@ healthRouter.get("/readyz", async (req, res) => {
         });
     }
     catch (err) {
+        const message = err instanceof Error ? err.message : "brain unreachable";
         res.status(503).json({
             status: "not_ready",
             edge: "ok",
             brain: "degraded",
-            error: err.message,
+            error: message,
         });
     }
 });
-healthRouter.get("/metrics", (req, res) => {
+healthRouter.get("/metrics", (_req, res) => {
     res.json({
         uptime_seconds: process.uptime(),
         memory_usage_mb: Math.round(process.memoryUsage().heapUsed / 1024 / 1024),

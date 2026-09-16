@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import maplibregl from "maplibre-gl";
+import * as maplibregl from "maplibre-gl";
 
 interface MapViewProps {
   center: [number, number];
@@ -48,7 +48,7 @@ export const MapView: React.FC<MapViewProps> = ({ center, zoom, pfzNodes = [] })
         mapRef.current = null;
       }
     };
-  }, []);
+  }, [center, zoom]);
 
   useEffect(() => {
     if (!mapRef.current) return;

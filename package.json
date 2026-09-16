@@ -1,0 +1,24 @@
+{
+  "name": "namami",
+  "version": "0.1.0",
+  "private": true,
+  "description": "NAMAMI — Agentic AI Marine Intelligence Platform (SIH 2026)",
+  "workspaces": [
+    "edge",
+    "web"
+  ],
+  "scripts": {
+    "lint": "npm run lint -w @namami/edge && npm run lint -w @namami/web",
+    "lint:brain": "python -m ruff check brain tests",
+    "test": "npm run test -w @namami/edge && npm run test -w @namami/web && npm run test:brain",
+    "test:brain": "python -m pytest tests brain/tests -q",
+    "build": "npm run build -w @namami/edge && npm run build -w @namami/web",
+    "dev": "npm run dev -w @namami/web",
+    "dev:edge": "npm run dev -w @namami/edge",
+    "dev:web": "npm run dev -w @namami/web",
+    "dev:brain": "python -m uvicorn app.main:app --reload --app-dir brain --port 8000"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

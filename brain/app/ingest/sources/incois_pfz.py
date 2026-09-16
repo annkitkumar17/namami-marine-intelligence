@@ -14,7 +14,7 @@ class INCOISPFZAdapter(BaseSourceAdapter):
 
     async def fetch_raw(self) -> Dict[str, Any]:
         # Priority 1 INCOIS source fetcher with fixture fallback
-        if settings.DATA_MODE == "REAL" and settings.INCOIS_PFZ_API_URL:
+        if settings.DATA_MODE == "REAL" and settings.FEATURE_INCOIS and settings.INCOIS_PFZ_API_URL:
             # Placeholder for live INCOIS HTTP client call
             pass
         with open(FIXTURE_PATH, "r") as f:
