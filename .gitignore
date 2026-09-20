@@ -51,3 +51,7 @@ minio-data/
 node_modules/
 .next/
 dist/
+
+edge/dist/
+web/.next/
+brain/__pycache__/
