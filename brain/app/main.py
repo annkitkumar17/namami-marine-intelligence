@@ -203,6 +203,56 @@ async def get_sst_field():
     return res
 
 
+@app.post("/v1/bhashini/translate")
+async def bhashini_translate(
+    payload: Dict[str, Any] = Body(...),
+):
+    """Translate text between Indian languages and English using Bhashini IndicTrans2."""
+    text = payload.get("text", "")
+    source_lang = payload.get("source_lang", "en")
+    target_lang = payload.get("target_lang", "hi")
+
+    conn = connector_registry.get_connector("bhashini")
+    if not conn:
+        raise HTTPException(status_code=500, detail="Bhashini connector unavailable")
+    
+    result = await conn.translate_text(text=text, source_lang=source_lang, target_lang=target_lang)
+    return result
+
+
+@app.post("/v1/bhashini/asr")
+async def bhashini_asr(
+    payload: Dict[str, Any] = Body(...),
+):
+    """Speech-to-Text inference for Indian languages using Bhashini ASR."""
+    audio_base64 = payload.get("audio_base64", "")
+    language = payload.get("language", "hi")
+
+    conn = connector_registry.get_connector("bhashini")
+    if not conn:
+        raise HTTPException(status_code=500, detail="Bhashini connector unavailable")
+    
+    result = await conn.speech_to_text(audio_base64=audio_base64, language=language)
+    return result
+
+
+@app.post("/v1/bhashini/tts")
+async def bhashini_tts(
+    payload: Dict[str, Any] = Body(...),
+):
+    """Text-to-Speech synthesis for Indian languages using Bhashini TTS."""
+    text = payload.get("text", "")
+    target_lang = payload.get("target_lang", "hi")
+    gender = payload.get("gender", "female")
+
+    conn = connector_registry.get_connector("bhashini")
+    if not conn:
+        raise HTTPException(status_code=500, detail="Bhashini connector unavailable")
+    
+    result = await conn.text_to_speech(text=text, target_lang=target_lang, gender=gender)
+    return result
+
+
 @app.post("/v1/ask", response_model=AdvisoryResponse)
 async def ask_advisory(request: AskRequest):
     pfz_conn = connector_registry.get_connector("incois-pfz")
@@ -278,3 +328,4 @@ async def ask_advisory(request: AskRequest):
         ledger_steps=ledger_steps,
         created_at=now,
     )
+

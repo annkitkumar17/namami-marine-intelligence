@@ -210,13 +210,48 @@ export function RouteOptimizer({
           <div className="route-legs-card">
             <div className="legs-card-header">
               <h3 className="legs-title">Waypoint Navigation Schedule & Leg Conditions</h3>
-              <button
-                type="button"
-                onClick={() => onNavigateToTab('map')}
-                className="btn-view-on-map"
-              >
-                <span>View on Tactical Radar Map →</span>
-              </button>
+              <div className="legs-header-actions">
+                <button
+                  type="button"
+                  onClick={() => {
+                    const geojson = {
+                      type: "FeatureCollection",
+                      features: [
+                        {
+                          type: "Feature",
+                          properties: {
+                            name: `A* Safe Corridor: ${activeRoute.origin.name} to ${activeRoute.destination.name}`,
+                            distanceKm: activeRoute.totalDistanceKm,
+                            etaMinutes: activeRoute.etaMinutes,
+                          },
+                          geometry: {
+                            type: "LineString",
+                            coordinates: activeRoute.waypoints.map((w: any) => [w.lng, w.lat]),
+                          },
+                        },
+                      ],
+                    };
+                    const blob = new Blob([JSON.stringify(geojson, null, 2)], { type: 'application/geo+json' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `NAMAMI_ROUTE_${selectedVessel.callSign}.geojson`;
+                    a.click();
+                    URL.revokeObjectURL(url);
+                    soundFX.playBlip(1100);
+                  }}
+                  className="btn-export-route"
+                >
+                  📥 Export GeoJSON / GPX
+                </button>
+                <button
+                  type="button"
+                  onClick={() => onNavigateToTab('map')}
+                  className="btn-view-on-map"
+                >
+                  <span>View on Tactical Radar Map →</span>
+                </button>
+              </div>
             </div>
 
             <div className="legs-table-wrapper">

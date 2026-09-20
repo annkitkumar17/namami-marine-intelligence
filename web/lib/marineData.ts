@@ -289,20 +289,170 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
   }
 };
 
-// Major Indian Coastal Ports
-export const PORTS = [
-  { id: 'kochi', name: 'Kochi Port (Cochin)', state: 'Kerala', lat: 9.96, lng: 76.24, maxDepth: 14.5 },
-  { id: 'mumbai', name: 'Mumbai Harbor', state: 'Maharashtra', lat: 18.94, lng: 72.85, maxDepth: 12.0 },
-  { id: 'chennai', name: 'Chennai Port (Kasimedu)', state: 'Tamil Nadu', lat: 13.12, lng: 80.30, maxDepth: 16.0 },
-  { id: 'vizag', name: 'Visakhapatnam Port', state: 'Andhra Pradesh', lat: 17.69, lng: 83.30, maxDepth: 18.1 },
-  { id: 'porbandar', name: 'Porbandar Port', state: 'Gujarat', lat: 21.64, lng: 69.60, maxDepth: 10.5 },
-  { id: 'kanyakumari', name: 'Kanyakumari / Colachel', state: 'Tamil Nadu', lat: 8.08, lng: 77.55, maxDepth: 9.0 },
-  { id: 'mangalore', name: 'New Mangalore Port', state: 'Karnataka', lat: 12.92, lng: 74.81, maxDepth: 13.5 },
-  { id: 'paradip', name: 'Paradip Port', state: 'Odisha', lat: 20.26, lng: 86.67, maxDepth: 15.0 },
+// Port & Coastal Location Definition
+export interface PortLocation {
+  id: string;
+  name: string;
+  state: string;
+  lat: number;
+  lng: number;
+  region: 'WEST_COAST' | 'EAST_COAST' | 'ISLANDS';
+  primarySpecies: string[];
+  depthM: number;
+  nearestImblDistanceKm: number;
+  description: string;
+}
+
+export const PORTS: PortLocation[] = [
+  {
+    id: 'kochi',
+    name: 'Kochi Port (Cochin)',
+    state: 'Kerala',
+    lat: 9.96,
+    lng: 76.24,
+    region: 'WEST_COAST',
+    primarySpecies: ['Indian Oil Sardine', 'Indian Mackerel', 'Yellowfin Tuna', 'Squid'],
+    depthM: 42,
+    nearestImblDistanceKm: 14.8,
+    description: 'Major Southwest pelagic fishing hub with high coastal upwelling and rich thermoclines.'
+  },
+  {
+    id: 'chennai',
+    name: 'Chennai Port (Kasimedu)',
+    state: 'Tamil Nadu',
+    lat: 13.08,
+    lng: 80.27,
+    region: 'EAST_COAST',
+    primarySpecies: ['Seer Fish (Surmai)', 'Tiger Prawns', 'Red Snapper', 'Barracuda'],
+    depthM: 45,
+    nearestImblDistanceKm: 28.4,
+    description: 'Premier East Coast mechanized harbor serving Coromandel shelf fishing fleets.'
+  },
+  {
+    id: 'visakhapatnam',
+    name: 'Visakhapatnam Harbor',
+    state: 'Andhra Pradesh',
+    lat: 17.68,
+    lng: 83.21,
+    region: 'EAST_COAST',
+    primarySpecies: ['Yellowfin Tuna', 'Ribbon Fish', 'Croaker', 'Cuttlefish'],
+    depthM: 85,
+    nearestImblDistanceKm: 185.0,
+    description: 'Deepwater Bay of Bengal continental shelf break with pelagic tuna aggregations.'
+  },
+  {
+    id: 'mumbai',
+    name: 'Mumbai (Sassoon Docks / Ferry Wharf)',
+    state: 'Maharashtra',
+    lat: 18.92,
+    lng: 72.83,
+    region: 'WEST_COAST',
+    primarySpecies: ['Bombay Duck', 'Pomfret', 'Tiger Prawns', 'Ghol Fish'],
+    depthM: 55,
+    nearestImblDistanceKm: 142.0,
+    description: 'Central Arabian Sea trawling hub with wide continental shelf banks.'
+  },
+  {
+    id: 'mangalore',
+    name: 'Mangalore Port (Malpe / Panambur)',
+    state: 'Karnataka',
+    lat: 12.91,
+    lng: 74.85,
+    region: 'WEST_COAST',
+    primarySpecies: ['Silver Pomfret', 'Indian Mackerel', 'Squid', 'Kingfish'],
+    depthM: 48,
+    nearestImblDistanceKm: 68.0,
+    description: 'Karnataka central coast deep purse-seining and gillnetting center.'
+  },
+  {
+    id: 'porbandar',
+    name: 'Porbandar & Veraval Harbor',
+    state: 'Gujarat',
+    lat: 21.64,
+    lng: 69.62,
+    region: 'WEST_COAST',
+    primarySpecies: ['Ribbon Fish', 'Croaker', 'Lobster', 'Squid', 'Cuttlefish'],
+    depthM: 60,
+    nearestImblDistanceKm: 34.5,
+    description: 'Northwest Arabian Sea fleet base with active Sir Creek boundary surveillance.'
+  },
+  {
+    id: 'paradip',
+    name: 'Paradip Fishing Harbor',
+    state: 'Odisha',
+    lat: 20.31,
+    lng: 86.61,
+    region: 'EAST_COAST',
+    primarySpecies: ['Hilsa (Ilish)', 'White Pomfret', 'Tiger Prawns', 'Catfish'],
+    depthM: 40,
+    nearestImblDistanceKm: 110.0,
+    description: 'Mahanadi plume and North Bay nutrient-rich estuarine pelagic ground.'
+  },
+  {
+    id: 'kanyakumari',
+    name: 'Kanyakumari & Thoothukudi',
+    state: 'Tamil Nadu',
+    lat: 8.08,
+    lng: 77.55,
+    region: 'EAST_COAST',
+    primarySpecies: ['Skipjack Tuna', 'Reef Cod', 'Squid', 'Snapper', 'Carangids'],
+    depthM: 65,
+    nearestImblDistanceKm: 12.2,
+    description: 'Triple sea convergence zone (Arabian Sea, Bay of Bengal, Indian Ocean) near Wadge Bank.'
+  },
+  {
+    id: 'digha',
+    name: 'Digha / Shankarpur Harbor',
+    state: 'West Bengal',
+    lat: 21.62,
+    lng: 87.51,
+    region: 'EAST_COAST',
+    primarySpecies: ['Hilsa', 'Bhetki', 'Silver Pomfret', 'Giant Freshwater Prawn'],
+    depthM: 32,
+    nearestImblDistanceKm: 58.0,
+    description: 'Ganges-Brahmaputra delta outflow with massive seasonal Hilsa migrations.'
+  },
+  {
+    id: 'port_blair',
+    name: 'Port Blair & Havelock Island',
+    state: 'Andaman & Nicobar',
+    lat: 11.62,
+    lng: 92.72,
+    region: 'ISLANDS',
+    primarySpecies: ['Bigeye Tuna', 'Yellowfin Tuna', 'Marlin', 'Mahi Mahi', 'Squid'],
+    depthM: 140,
+    nearestImblDistanceKm: 42.0,
+    description: 'Deep oceanic Andaman Sea shelf with pristine pelagic gamefish and high catch scores.'
+  },
+  {
+    id: 'kavaratti',
+    name: 'Kavaratti & Agatti Island',
+    state: 'Lakshadweep',
+    lat: 10.56,
+    lng: 72.64,
+    region: 'ISLANDS',
+    primarySpecies: ['Skipjack Tuna (Pole & Line)', 'Yellowfin Tuna', 'Rainbow Runner'],
+    depthM: 110,
+    nearestImblDistanceKm: 195.0,
+    description: 'Coral atoll sustainable pole-and-line tuna fishery with crystal water visibility.'
+  },
+  {
+    id: 'goa',
+    name: 'Mormugao & Panaji Harbor',
+    state: 'Goa',
+    lat: 15.40,
+    lng: 73.80,
+    region: 'WEST_COAST',
+    primarySpecies: ['King Mackerel', 'Seer Fish', 'Squid', 'Red Snapper'],
+    depthM: 44,
+    nearestImblDistanceKm: 112.0,
+    description: 'Central Konkan coast fisheries with rich coastal banks and moderate swell.'
+  }
 ];
 
-// Potential Fishing Zones (INCOIS PFZ Adviories)
+// Potential Fishing Zones (INCOIS PFZ Advisories across all Indian maritime sectors)
 export const PFZ_ZONES: PFZNode[] = [
+  // Kerala & SW Coast
   {
     id: 'PFZ-SW-042',
     name: 'Alappuzha-Kochi Thermal Front Alpha',
@@ -323,6 +473,26 @@ export const PFZ_ZONES: PFZNode[] = [
     source: 'INCOIS PFZ Multichannel AVHRR/MODIS',
   },
   {
+    id: 'PFZ-SW-049',
+    name: 'Munambam Offing Upwelling Zone',
+    sector: 'Kochi-Munambam (SW Sector 3)',
+    lat: 10.18,
+    lng: 75.78,
+    depthM: 38,
+    sstCelsius: 28.1,
+    chlorophyllMgM3: 2.35,
+    distanceKm: 38.5,
+    bearingDeg: 295,
+    status: 'ACTIVE',
+    speciesLikely: ['Anchovy', 'Threadfin Bream', 'Squid'],
+    catchScore: 92,
+    fuelIndex: 'High Yield (24 L)',
+    issuedAt: '2026-09-16T04:30:00Z',
+    validTo: '2026-09-17T18:00:00Z',
+    source: 'INCOIS PFZ & Oceansat-3 OCM',
+  },
+  // Wadge Bank / Kanyakumari
+  {
     id: 'PFZ-SW-045',
     name: 'Wadge Bank Pelagic Cluster',
     sector: 'Kanyakumari-Wadge Bank (Sector 7)',
@@ -341,6 +511,146 @@ export const PFZ_ZONES: PFZNode[] = [
     validTo: '2026-09-17T18:00:00Z',
     source: 'INCOIS PFZ & Oceansat-3 OCM',
   },
+  // Karnataka / Mangalore
+  {
+    id: 'PFZ-KA-012',
+    name: 'Malpe-Mangalore Canyon Eddy',
+    sector: 'Karnataka Coast (Central Sector)',
+    lat: 13.15,
+    lng: 74.32,
+    depthM: 52,
+    sstCelsius: 28.6,
+    chlorophyllMgM3: 2.05,
+    distanceKm: 42.0,
+    bearingDeg: 260,
+    status: 'ACTIVE',
+    speciesLikely: ['Mackerel', 'Silver Pomfret', 'Squid'],
+    catchScore: 90,
+    fuelIndex: 'Optimal (32 L)',
+    issuedAt: '2026-09-16T04:30:00Z',
+    validTo: '2026-09-17T18:00:00Z',
+    source: 'INCOIS PFZ Advisory',
+  },
+  // Goa / Central West
+  {
+    id: 'PFZ-GOA-008',
+    name: 'Mormugao Bank Pelagic Front',
+    sector: 'Goa Coastal Waters',
+    lat: 15.35,
+    lng: 73.40,
+    depthM: 48,
+    sstCelsius: 28.2,
+    chlorophyllMgM3: 1.90,
+    distanceKm: 36.4,
+    bearingDeg: 250,
+    status: 'ACTIVE',
+    speciesLikely: ['King Mackerel', 'Tuna', 'Reef Cod'],
+    catchScore: 91,
+    fuelIndex: 'Optimal (26 L)',
+    issuedAt: '2026-09-16T04:30:00Z',
+    validTo: '2026-09-17T18:00:00Z',
+    source: 'INCOIS PFZ Advisory',
+  },
+  // Maharashtra / Mumbai
+  {
+    id: 'PFZ-MH-022',
+    name: 'Bombay High South Shoal',
+    sector: 'Maharashtra Outer Continental Shelf',
+    lat: 18.70,
+    lng: 72.25,
+    depthM: 65,
+    sstCelsius: 27.8,
+    chlorophyllMgM3: 2.20,
+    distanceKm: 68.0,
+    bearingDeg: 250,
+    status: 'ACTIVE',
+    speciesLikely: ['Bombay Duck', 'Croaker', 'Pomfret', 'Seer Fish'],
+    catchScore: 93,
+    fuelIndex: 'High Yield (46 L)',
+    issuedAt: '2026-09-16T04:30:00Z',
+    validTo: '2026-09-17T18:00:00Z',
+    source: 'INCOIS PFZ Advisory',
+  },
+  // Gujarat / Veraval & Porbandar
+  {
+    id: 'PFZ-NW-088',
+    name: 'Veraval Offing Deep Front',
+    sector: 'Saurashtra Coast (Sector 2)',
+    lat: 20.65,
+    lng: 69.95,
+    depthM: 55,
+    sstCelsius: 26.8,
+    chlorophyllMgM3: 1.95,
+    distanceKm: 64.0,
+    bearingDeg: 215,
+    status: 'ACTIVE',
+    speciesLikely: ['Ribbon Fish', 'Croaker', 'Cuttlefish', 'Tuna'],
+    catchScore: 89,
+    fuelIndex: 'Moderate (42 L)',
+    issuedAt: '2026-09-16T04:30:00Z',
+    validTo: '2026-09-17T18:00:00Z',
+    source: 'INCOIS PFZ & Bhoonidhi EOS-06',
+  },
+  {
+    id: 'PFZ-NW-092',
+    name: 'Porbandar Offshore Front',
+    sector: 'Gujarat Kathiawar Shelf',
+    lat: 21.40,
+    lng: 69.15,
+    depthM: 46,
+    sstCelsius: 26.5,
+    chlorophyllMgM3: 2.10,
+    distanceKm: 48.0,
+    bearingDeg: 235,
+    status: 'ACTIVE',
+    speciesLikely: ['Ribbon Fish', 'Horse Mackerel', 'Cephalopods'],
+    catchScore: 88,
+    fuelIndex: 'Optimal (35 L)',
+    issuedAt: '2026-09-16T04:30:00Z',
+    validTo: '2026-09-17T18:00:00Z',
+    source: 'INCOIS PFZ & Oceansat-3',
+  },
+  // Tamil Nadu / Chennai & Coromandel
+  {
+    id: 'PFZ-EC-053',
+    name: 'Coromandel Eddy Front',
+    sector: 'Puducherry-Chennai Offing',
+    lat: 12.85,
+    lng: 80.65,
+    depthM: 85,
+    sstCelsius: 28.7,
+    chlorophyllMgM3: 1.62,
+    distanceKm: 52.8,
+    bearingDeg: 120,
+    status: 'ACTIVE',
+    speciesLikely: ['Barracuda', 'Sailfish', 'Mahi Mahi (Dorado)'],
+    catchScore: 91,
+    fuelIndex: 'Optimal (34 L)',
+    issuedAt: '2026-09-16T04:30:00Z',
+    validTo: '2026-09-17T18:00:00Z',
+    source: 'INCOIS PFZ Advisory',
+  },
+  // Tamil Nadu / Tuticorin & Gulf of Mannar
+  {
+    id: 'PFZ-SE-024',
+    name: 'Tuticorin Deep Trench Cluster',
+    sector: 'Gulf of Mannar Deep Basin',
+    lat: 8.65,
+    lng: 78.55,
+    depthM: 62,
+    sstCelsius: 28.8,
+    chlorophyllMgM3: 1.75,
+    distanceKm: 44.5,
+    bearingDeg: 110,
+    status: 'ACTIVE',
+    speciesLikely: ['Tuna', 'Carangids', 'Barracuda', 'Snapper'],
+    catchScore: 93,
+    fuelIndex: 'Optimal (30 L)',
+    issuedAt: '2026-09-16T04:30:00Z',
+    validTo: '2026-09-17T18:00:00Z',
+    source: 'INCOIS PFZ & AVHRR',
+  },
+  // Palk Strait
   {
     id: 'PFZ-SE-019',
     name: 'Palk Strait North-East Front',
@@ -360,45 +670,104 @@ export const PFZ_ZONES: PFZNode[] = [
     validTo: '2026-09-17T18:00:00Z',
     source: 'INCOIS PFZ & Landsat-9 OLI',
   },
+  // Andhra Pradesh / Visakhapatnam
   {
-    id: 'PFZ-NW-088',
-    name: 'Veraval Offing Deep Front',
-    sector: 'Saurashtra Coast (Sector 2)',
-    lat: 20.65,
-    lng: 69.95,
-    depthM: 55,
-    sstCelsius: 26.8,
-    chlorophyllMgM3: 1.95,
-    distanceKm: 64.0,
-    bearingDeg: 215,
+    id: 'PFZ-AP-033',
+    name: 'Visakhapatnam Shelf Break',
+    sector: 'Andhra North Coast',
+    lat: 17.50,
+    lng: 83.75,
+    depthM: 95,
+    sstCelsius: 28.5,
+    chlorophyllMgM3: 1.88,
+    distanceKm: 52.0,
+    bearingDeg: 125,
     status: 'ACTIVE',
-    speciesLikely: ['Ribbon Fish', 'Croaker', 'Cuttlefish'],
-    catchScore: 89,
-    fuelIndex: 'Moderate (42 L)',
-    issuedAt: '2026-09-16T04:30:00Z',
-    validTo: '2026-09-17T18:00:00Z',
-    source: 'INCOIS PFZ & Bhoonidhi EOS-06',
-  },
-  {
-    id: 'PFZ-EC-053',
-    name: 'Coromandel Eddy Front',
-    sector: 'Puducherry-Chennai Offing',
-    lat: 12.35,
-    lng: 80.55,
-    depthM: 85,
-    sstCelsius: 28.7,
-    chlorophyllMgM3: 1.62,
-    distanceKm: 52.8,
-    bearingDeg: 120,
-    status: 'ACTIVE',
-    speciesLikely: ['Barracuda', 'Sailfish', 'Mahi Mahi (Dorado)'],
-    catchScore: 91,
-    fuelIndex: 'Optimal (34 L)',
+    speciesLikely: ['Yellowfin Tuna', 'Ribbon Fish', 'Seer Fish'],
+    catchScore: 92,
+    fuelIndex: 'Optimal (38 L)',
     issuedAt: '2026-09-16T04:30:00Z',
     validTo: '2026-09-17T18:00:00Z',
     source: 'INCOIS PFZ Advisory',
   },
+  // Odisha / Paradip
+  {
+    id: 'PFZ-OD-015',
+    name: 'Paradip Deep Water Plume',
+    sector: 'Odisha Coastal Shelf',
+    lat: 20.05,
+    lng: 87.10,
+    depthM: 45,
+    sstCelsius: 28.0,
+    chlorophyllMgM3: 2.40,
+    distanceKm: 48.5,
+    bearingDeg: 135,
+    status: 'ACTIVE',
+    speciesLikely: ['Hilsa', 'Pomfret', 'Tiger Prawns', 'Croaker'],
+    catchScore: 95,
+    fuelIndex: 'High Yield (32 L)',
+    issuedAt: '2026-09-16T04:30:00Z',
+    validTo: '2026-09-17T18:00:00Z',
+    source: 'INCOIS PFZ & Bhoonidhi',
+  },
+  // Andaman & Nicobar
+  {
+    id: 'PFZ-AN-007',
+    name: 'Havelock Pelagic Ridge',
+    sector: 'Andaman Sea Offshore Basin',
+    lat: 11.85,
+    lng: 93.15,
+    depthM: 140,
+    sstCelsius: 29.2,
+    chlorophyllMgM3: 1.50,
+    distanceKm: 51.0,
+    bearingDeg: 65,
+    status: 'ACTIVE',
+    speciesLikely: ['Yellowfin Tuna', 'Bigeye Tuna', 'Marlin', 'Squid'],
+    catchScore: 97,
+    fuelIndex: 'High Yield (48 L)',
+    issuedAt: '2026-09-16T04:30:00Z',
+    validTo: '2026-09-17T18:00:00Z',
+    source: 'INCOIS PFZ Oceansat-3',
+  }
 ];
+
+// Great-Circle Distance Calculator (Haversine formula in KM)
+export function calculateDistanceKm(lat1: number, lng1: number, lat2: number, lng2: number): number {
+  const R = 6371; // Earth's radius in km
+  const dLat = (lat2 - lat1) * (Math.PI / 180);
+  const dLng = (lng2 - lng1) * (Math.PI / 180);
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) *
+    Math.sin(dLng / 2) * Math.sin(dLng / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return Number((R * c).toFixed(1));
+}
+
+// Navigational Bearing Calculator (degrees 0 - 360)
+export function calculateBearingDeg(lat1: number, lng1: number, lat2: number, lng2: number): number {
+  const y = Math.sin((lng2 - lng1) * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180));
+  const x =
+    Math.cos(lat1 * (Math.PI / 180)) * Math.sin(lat2 * (Math.PI / 180)) -
+    Math.sin(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) * Math.cos((lng2 - lng1) * (Math.PI / 180));
+  const bearing = (Math.atan2(y, x) * 180) / Math.PI;
+  return Math.round((bearing + 360) % 360);
+}
+
+// Get PFZ Zones sorted & recalculated relative to any location (User GPS or Port)
+export function getPfzZonesAroundLocation(lat: number, lng: number): PFZNode[] {
+  return PFZ_ZONES.map((pfz) => {
+    const distanceKm = calculateDistanceKm(lat, lng, pfz.lat, pfz.lng);
+    const bearingDeg = calculateBearingDeg(lat, lng, pfz.lat, pfz.lng);
+    return {
+      ...pfz,
+      distanceKm,
+      bearingDeg
+    };
+  }).sort((a, b) => a.distanceKm - b.distanceKm);
+}
+
 
 // Geofence & Boundary Zones
 export const GEOFENCE_ZONES: GeofenceZone[] = [
@@ -479,6 +848,99 @@ export const GEOFENCE_ZONES: GeofenceZone[] = [
     ],
   },
 ];
+
+// Comprehensive Location Intelligence Dossier Generator
+export interface LocationDossier {
+  port: PortLocation;
+  nearestPfz: PFZNode;
+  allRegionalPfzs: PFZNode[];
+  seaState: {
+    waveHeightM: number;
+    windSpeedKnots: number;
+    windDirection: string;
+    sstCelsius: number;
+    chlorophyllMgM3: number;
+    swellPeriodSec: number;
+    tideInfo: string;
+    highTideTime: string;
+    lowTideTime: string;
+  };
+  safety: {
+    verdict: 'GO' | 'CAUTION' | 'NO_GO';
+    actionText: string;
+    departureWindow: string;
+    confidenceScore: number;
+  };
+  geofence: {
+    nearestBoundaryName: string;
+    distanceKm: number;
+    status: 'SAFE' | 'CAUTION' | 'ALERT';
+    restrictedZonesCount: number;
+  };
+  briefing: Record<string, string>;
+}
+
+export function getLocationDossier(lat: number, lng: number, vessel?: VesselProfile): LocationDossier {
+  // Find closest Port
+  let closestPort = PORTS[0];
+  let minPortDist = Infinity;
+  for (const p of PORTS) {
+    const d = calculateDistanceKm(lat, lng, p.lat, p.lng);
+    if (d < minPortDist) {
+      minPortDist = d;
+      closestPort = p;
+    }
+  }
+
+  // Find PFZs around location
+  const regionalPfzs = getPfzZonesAroundLocation(lat, lng);
+  const topPfz = regionalPfzs[0] || PFZ_ZONES[0];
+
+  // Evaluate Safety based on vessel
+  const maxWave = vessel?.maxWaveHeightM || 2.8;
+  const waveHeight = topPfz.status === 'ACTIVE' ? 1.6 : 2.4;
+  const windSpeed = topPfz.status === 'ACTIVE' ? 14 : 22;
+  const verdict: 'GO' | 'CAUTION' | 'NO_GO' = waveHeight <= maxWave ? 'GO' : 'CAUTION';
+
+  // Distance to nearest IMBL
+  const nearestImbl = closestPort.nearestImblDistanceKm;
+
+  return {
+    port: closestPort,
+    nearestPfz: topPfz,
+    allRegionalPfzs: regionalPfzs.slice(0, 4),
+    seaState: {
+      waveHeightM: waveHeight,
+      windSpeedKnots: windSpeed,
+      windDirection: 'WNW (285°)',
+      sstCelsius: topPfz.sstCelsius || 28.4,
+      chlorophyllMgM3: topPfz.chlorophyllMgM3 || 1.85,
+      swellPeriodSec: 9.6,
+      tideInfo: 'Semi-diurnal (Spring Tide phase)',
+      highTideTime: '13:45 IST (+0.82m)',
+      lowTideTime: '19:30 IST (+0.18m)'
+    },
+    safety: {
+      verdict,
+      actionText: verdict === 'GO' ? 'Conditions optimal for departure to nearest high-yield PFZ.' : 'Caution advised: monitor wave limits.',
+      departureWindow: 'Tomorrow 06:00 - 14:00 IST',
+      confidenceScore: 96
+    },
+    geofence: {
+      nearestBoundaryName: closestPort.region === 'WEST_COAST' ? 'Indo-Pak Border / Arabian Sea EEZ' : 'Indo-Sri Lanka IMBL',
+      distanceKm: nearestImbl,
+      status: nearestImbl > 5 ? 'SAFE' : 'CAUTION',
+      restrictedZonesCount: 2
+    },
+    briefing: {
+      en: `Location Intelligence for ${closestPort.name}: Sea is ${verdict} (Waves ${waveHeight}m, Wind ${windSpeed} kts). Nearest PFZ is ${topPfz.name} at ${topPfz.distanceKm} km (Catch score: ${topPfz.catchScore}%). Border clearance is ${nearestImbl} km.`,
+      hi: `${closestPort.name} के लिए समुद्री विश्लेषण: स्थिति ${verdict === 'GO' ? 'सुरक्षित (GO)' : 'सावधानी (CAUTION)'} है। लहरें ${waveHeight}m और हवा ${windSpeed} kts हैं। निकटतम मत्स्य क्षेत्र ${topPfz.distanceKm} किमी दूर है (कैच स्कोर: ${topPfz.catchScore}%)।`,
+      ta: `${closestPort.name} கடல் பகுப்பாய்வு: கடல் பயணம் ${verdict === 'GO' ? 'பாதுகாப்பானது (GO)' : 'எச்சரிக்கை'}. அலை ${waveHeight}மீ, காற்று ${windSpeed} நாட்ஸ். அருகிலுள்ள PFZ ${topPfz.distanceKm} கிமீ தொலைவில் உள்ளது (மதிப்பெண்: ${topPfz.catchScore}%).`,
+      ml: `${closestPort.name} സമുദ്ര വിവരണം: കടൽ ${verdict === 'GO' ? 'സുരക്ഷിതമാണ് (GO)' : 'ജാഗ്രത'}. തിരമാല ${waveHeight}m, കാറ്റ് ${windSpeed} kts. അടുത്തുള്ള PFZ ${topPfz.distanceKm} കി.മീ അകലെയാണ് (സ്കോർ: ${topPfz.catchScore}%).`,
+      te: `${closestPort.name} సముద్ర విశ్లేషణ: ప్రయాణం ${verdict === 'GO' ? 'సురక్షితం (GO)' : 'జాగ్రత్త'}. అలలు ${waveHeight}m, గాలి ${windSpeed} kts. సమీప PFZ ${topPfz.distanceKm} కి.మీ దూరంలో ఉంది.`
+    }
+  };
+}
 
 // Vessel Preset Classes
 export const VESSEL_PROFILES: VesselProfile[] = [

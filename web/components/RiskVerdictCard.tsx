@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   ShieldIcon, 
   ShieldAlertIcon, 
@@ -10,10 +10,12 @@ import {
   WavesIcon, 
   WindIcon, 
   ActivityIcon,
-  CompassIcon
+  CompassIcon,
+  RefreshCwIcon
 } from './Icons';
 import { soundFX } from '../lib/audio';
 import { HOURLY_FORECAST, ForecastHour, VesselProfile } from '../lib/marineData';
+import { fetchRealTimeMarineWeather, LiveMarineWeather } from '../lib/weatherApi';
 
 interface RiskVerdictCardProps {
   selectedVessel: VesselProfile;
@@ -27,10 +29,34 @@ export function RiskVerdictCard({
   nearestImblDistanceKm,
 }: RiskVerdictCardProps) {
   const [selectedHour, setSelectedHour] = useState<ForecastHour>(HOURLY_FORECAST[0]);
+  const [liveWeather, setLiveWeather] = useState<LiveMarineWeather | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  // Compute live verdict based on deterministic threshold rules
-  const currentWave = 1.6;
-  const currentWind = 14.0;
+  useEffect(() => {
+    let isMounted = true;
+    async function load() {
+      setIsLoading(true);
+      try {
+        const w = await fetchRealTimeMarineWeather(
+          vesselPos.lat, 
+          vesselPos.lng, 
+          selectedVessel.maxWaveHeightM, 
+          selectedVessel.maxWindSpeedKnots
+        );
+        if (isMounted) setLiveWeather(w);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        if (isMounted) setIsLoading(false);
+      }
+    }
+    load();
+    return () => { isMounted = false; };
+  }, [vesselPos.lat, vesselPos.lng, selectedVessel]);
+
+  // Compute live verdict based on deterministic threshold rules & live API data
+  const currentWave = liveWeather ? liveWeather.current.waveHeightM : 1.6;
+  const currentWind = liveWeather ? liveWeather.current.windSpeedKnots : 14.0;
   const isWaveExceeded = currentWave > selectedVessel.maxWaveHeightM;
   const isWindExceeded = currentWind > selectedVessel.maxWindSpeedKnots;
   const isImblViolated = nearestImblDistanceKm <= 5.0;

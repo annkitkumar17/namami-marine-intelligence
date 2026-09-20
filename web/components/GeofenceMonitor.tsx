@@ -9,7 +9,8 @@ import {
   Volume2Icon, 
   NavigationIcon, 
   ActivityIcon,
-  LayersIcon
+  LayersIcon,
+  RadioIcon
 } from './Icons';
 import { soundFX } from '../lib/audio';
 import { GEOFENCE_ZONES, GeofenceZone, VesselProfile } from '../lib/marineData';
@@ -140,6 +141,42 @@ export function GeofenceMonitor({
           <span className="dist-num">{nearestImblDistanceKm.toFixed(1)}</span>
           <span className="dist-unit">KM TO IMBL</span>
         </div>
+      </div>
+
+      {/* Emergency Distress Beacon & VHF Guard Console */}
+      <div className="geofence-emergency-deck">
+        <div className="emergency-contact-box">
+          <div className="icg-badge">
+            <RadioIcon size={18} />
+            <span>INDIAN COAST GUARD (ICG) MARITIME RESCUE DESK</span>
+          </div>
+          <div className="icg-numbers-row">
+            <div className="icg-num-item">
+              <span className="num-label">National Toll-Free SAR:</span>
+              <strong className="num-val">1554</strong>
+            </div>
+            <div className="icg-num-item">
+              <span className="num-label">Emergency Calling Channel:</span>
+              <strong className="num-val">VHF Channel 16 (156.8 MHz)</strong>
+            </div>
+            <div className="icg-num-item">
+              <span className="num-label">NavIC Emergency Distress:</span>
+              <strong className="num-val">S-Band Broadcast Guard Active</strong>
+            </div>
+          </div>
+        </div>
+
+        <button
+          type="button"
+          onClick={() => {
+            soundFX.playEmergencySiren();
+            alert(`🚨 EMERGENCY SOS BEACON BROADCASTED!\n\nVessel: ${selectedVessel.name} (${selectedVessel.callSign})\nCoordinates: ${vesselPos.lat.toFixed(4)}°N, ${vesselPos.lng.toFixed(4)}°E\nTarget: MRCC Mumbai / Kochi Coast Guard Desk\nTransmitted via: NavIC Satellite & VHF Ch-16`);
+          }}
+          className="btn-sos-distress"
+        >
+          <ShieldAlertIcon size={20} />
+          <span>BROADCAST EMERGENCY SOS BEACON (VHF CH-16)</span>
+        </button>
       </div>
 
       {/* Geofence Zones Grid */}

@@ -32,8 +32,10 @@ class Settings(BaseSettings):
     MOSDAC_API_KEY: str = ""
     BHOONIDHI_API_URL: str = ""
     BHOONIDHI_API_KEY: str = ""
-    BHASHINI_API_URL: str = ""
-    BHASHINI_API_KEY: str = ""
+    BHASHINI_API_URL: str = "https://dhruva-api.bhashini.gov.in/services/inference"
+    BHASHINI_USER_ID: str = "4488e52b16-cd68-4ec5-b2f7-0469e5c91b69"
+    BHASHINI_API_KEY: str = "4488e52b16-cd68-4ec5-b2f7-0469e5c91b69"
+    BHASHINI_INFERENCE_KEY: str = "k3FEJN4_5onQnl6oOfmOFzz96DruoAmkhg4bduFKVi7W4X9sp59jAwzVvCl9fjbp"
     NAVIC_GATEWAY_URL: str = ""
     NAVIC_GATEWAY_KEY: str = ""
 

@@ -24,6 +24,21 @@ export default function DataSourcesSettingsPage() {
   const [testResults, setTestResults] = useState<Record<string, { status: string; message: string; latencyMs: number }>>({});
   const [saveSuccess, setSaveSuccess] = useState<boolean>(false);
 
+  // Load persisted provider configs from localStorage if available
+  React.useEffect(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const saved = localStorage.getItem('namami_data_sources_config');
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          setProviders(parsed);
+        }
+      } catch (e) {
+        console.warn('Failed to load saved provider configs:', e);
+      }
+    }
+  }, []);
+
   const handleToggleEnable = (id: string) => {
     soundFX.playBlip(750);
     setProviders((prev) =>
@@ -65,6 +80,13 @@ export default function DataSourcesSettingsPage() {
   };
 
   const handleSaveAll = () => {
+    if (typeof window !== 'undefined') {
+      try {
+        localStorage.setItem('namami_data_sources_config', JSON.stringify(providers));
+      } catch (e) {
+        console.warn('Failed to save to localStorage:', e);
+      }
+    }
     soundFX.playSonarPing();
     setSaveSuccess(true);
     setTimeout(() => setSaveSuccess(false), 3000);

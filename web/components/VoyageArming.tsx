@@ -269,6 +269,62 @@ export function VoyageArming({
           </div>
         </div>
       </div>
+
+      {/* Offline Emergency Phrases Audio Player */}
+      <div className="offline-phrases-card">
+        <div className="phrases-header">
+          <Volume2Icon size={20} />
+          <div>
+            <h3 className="phrases-title">Emergency Audio Phrases (Zero-Connectivity Voice Broadcast)</h3>
+            <p className="phrases-subtitle">Pre-synthesized distress calls stored on device for acoustic broadcast</p>
+          </div>
+        </div>
+
+        <div className="phrases-grid">
+          {EMERGENCY_PHRASES.map((phrase, idx) => (
+            <div key={idx} className="phrase-item-card">
+              <div className="phrase-lang-row">
+                <span className="lang-tag en">EN</span>
+                <p className="phrase-text">{phrase.en}</p>
+                <button
+                  type="button"
+                  onClick={() => soundFX.speakText(phrase.en, 'en')}
+                  className="btn-phrase-play"
+                  title="Play English Audio"
+                >
+                  🔊
+                </button>
+              </div>
+
+              <div className="phrase-lang-row">
+                <span className="lang-tag hi">HI</span>
+                <p className="phrase-text">{phrase.hi}</p>
+                <button
+                  type="button"
+                  onClick={() => soundFX.speakText(phrase.hi, 'hi')}
+                  className="btn-phrase-play"
+                  title="Play Hindi Audio"
+                >
+                  🔊
+                </button>
+              </div>
+
+              <div className="phrase-lang-row">
+                <span className="lang-tag ta">TA</span>
+                <p className="phrase-text">{phrase.ta}</p>
+                <button
+                  type="button"
+                  onClick={() => soundFX.speakText(phrase.ta, 'ta')}
+                  className="btn-phrase-play"
+                  title="Play Tamil Audio"
+                >
+                  🔊
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }

@@ -16,6 +16,7 @@ import {
   CompassIcon 
 } from './Icons';
 import { soundFX } from '../lib/audio';
+import { bhashiniVoice } from '../lib/voice';
 import { ChatMessage, AgentStep, TRANSLATIONS, VesselProfile, PFZNode } from '../lib/marineData';
 
 interface AgentCopilotProps {
@@ -69,6 +70,26 @@ export function AgentCopilot({
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, isProcessing]);
+
+  const handleSendMessageRef = useRef<(query: string) => void>(() => {});
+  handleSendMessageRef.current = (query: string) => {
+    handleSendMessage(query);
+  };
+
+  useEffect(() => {
+    bhashiniVoice.setCallbacks({
+      onTranscript: (transcript: string, isFinal: boolean) => {
+        setInputText(transcript);
+        if (isFinal) {
+          handleSendMessageRef.current(transcript);
+        }
+      },
+      onListeningState: (listening: boolean) => {
+        setIsListeningMic(listening);
+      },
+    });
+    bhashiniVoice.setLanguage(currentLanguage);
+  }, [currentLanguage]);
 
   // Execute Agentic Orchestration DAG
   const handleSendMessage = async (query: string) => {
@@ -227,16 +248,13 @@ export function AgentCopilot({
 
   const handleSimulateMic = () => {
     if (isListeningMic) {
+      bhashiniVoice.stopListening();
       setIsListeningMic(false);
       return;
     }
     setIsListeningMic(true);
     soundFX.playBlip(660);
-
-    setTimeout(() => {
-      setIsListeningMic(false);
-      handleSendMessage("Nearest PFZ today?");
-    }, 2200);
+    bhashiniVoice.startListening(currentLanguage);
   };
 
   return (
